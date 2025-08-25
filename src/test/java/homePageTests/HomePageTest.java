@@ -60,6 +60,8 @@ public class HomePageTest {
 
     }
 
+//    3 Завдання
+
     @Test
         public void checkLogoAllo () throws InterruptedException {
 
@@ -92,7 +94,7 @@ public class HomePageTest {
 
         String actualProduct = firstProduct.getText();
 
-        Assert.assertTrue(actualProduct.contains("AirPods 3"),"Назва не містить Airpods 3");
+        Assert.assertTrue(actualProduct.contains("AirPods 3"), "Назва не містить Airpods 3");
 
         WebElement fullName = driver.findElement(By.xpath("(//a[@class='product-card__title'])[1]"));
 
@@ -113,6 +115,8 @@ public class HomePageTest {
         driver.quit();
 
     }
+
+//    4 Завдання
 
     @Test
     public void checkHeaderItems () throws InterruptedException {
@@ -161,4 +165,15 @@ public class HomePageTest {
 
     }
 
+    // Завдання 5
+    @Test
+    public void openWindiwMoyo () {
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+
+        driver.get("https://www.moyo.ua/");
+
+
+    }
 }
