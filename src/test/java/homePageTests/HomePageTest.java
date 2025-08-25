@@ -176,4 +176,16 @@ public class HomePageTest {
 
 
     }
+// завдання 6
+
+    @Test
+    public void openWindiwMiezu(){
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+
+        driver.get("https://www.meizu.com/global");
+    }
+
+
 }
