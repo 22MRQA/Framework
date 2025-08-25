@@ -60,8 +60,61 @@ public class HomePageTest {
 
         driver.quit();
 
+    }
+//    3 Завдання
+
+    @Test
+    public void checkLogoAllo () throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+
+        driver.get("https://allo.ua/");
+
+        WebElement logoAlloDisplay = driver.findElement(By.xpath("//a[@class='v-logo']"));
+
+        Assert.assertTrue(logoAlloDisplay.isDisplayed());
+
+//        driver.quit();
+
+
+        sleep(2000);
+
+        WebElement searchMenu = driver.findElement(By.xpath("//input[@id='search-form__input']"));
+
+        searchMenu.sendKeys("AirPods 3");
+
+        WebElement buttonLupa = driver.findElement(By.xpath("//button[@class='search-form__submit-button']"));
+
+        buttonLupa.click();
+
+        sleep(5000);
+
+        WebElement firstProduct = driver.findElement(By.xpath("//div[@data-product-id='14092905']"));
+
+        String actualProduct = firstProduct.getText();
+
+        Assert.assertTrue(actualProduct.contains("AirPods 3"), "Назва не містить Airpods 3");
+
+        WebElement fullName = driver.findElement(By.xpath("(//a[@class='product-card__title'])[1]"));
+
+        String name = fullName.getText();
+
+//        System.out.println(name);
+
+        fullName.click();
+
+        sleep(5000);
+
+        WebElement checkName = driver.findElement(By.xpath("//h1[@class='p-view__header-title']"));
+
+        String checkEqualsName = checkName.getText();
+
+        Assert.assertEquals(checkEqualsName, name);
+
+        driver.quit();
 
     }
-
 
 }
