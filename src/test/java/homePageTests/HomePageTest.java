@@ -1,120 +1,97 @@
 package homePageTests;
 
-
-//import com.beust.ah.A;
-//import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-//import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static java.lang.Thread.sleep;
 
 public class HomePageTest {
 
-    //    Завдання 1
-    @Test
-    public void checkCatalogButtonDisplay() throws InterruptedException {
+    WebDriver driver;
 
-        WebDriver driver = new ChromeDriver();
-
+    @BeforeMethod
+    public void setUp() {
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
-
         driver.get("https://allo.ua/");
-
-        WebElement catalogButtonLocator = driver.findElement(By.xpath("//div[@class='mh-catalog-btn']"));
-
-
-        Assert.assertTrue(catalogButtonLocator.isDisplayed());
-
-
     }
 
-    //    Завдання 2
-
     @Test
-    public void checkCatalogButtonOpen() throws InterruptedException {
-
-        WebDriver driver = new ChromeDriver();
-
-        driver.manage().window().maximize();
-
-        driver.get("https://allo.ua/");
-
-        WebElement catalogButtonLocator = driver.findElement(By.xpath("//div[@class='mh-catalog-btn']"));
-
-        catalogButtonLocator.click();
-
-        sleep(5000);
-
-
-        WebElement catalogButtonGamer = driver.findElement(By.xpath("//a[contains(., 'Побутова техніка')]"));
-
-        Assert.assertTrue(catalogButtonGamer.isDisplayed());
-
-        catalogButtonGamer.click();
-
-        driver.quit();
-
-    }
-//    3 Завдання
-
-    @Test
-    public void checkLogoAllo () throws InterruptedException {
-
-        WebDriver driver = new ChromeDriver();
-
-        driver.manage().window().maximize();
-
-        driver.get("https://allo.ua/");
-
-        WebElement logoAlloDisplay = driver.findElement(By.xpath("//a[@class='v-logo']"));
-
-        Assert.assertTrue(logoAlloDisplay.isDisplayed());
-
-//        driver.quit();
-
+    public void checkCatalogButton() throws InterruptedException {
 
         sleep(2000);
 
-        WebElement searchMenu = driver.findElement(By.xpath("//input[@id='search-form__input']"));
+        WebElement catalogLocatorButton = driver.findElement(By.xpath("//div[@class='mh-catalog-btn']"));
 
-        searchMenu.sendKeys("AirPods 3");
+        Assert.assertTrue(catalogLocatorButton.isDisplayed());
 
-        WebElement buttonLupa = driver.findElement(By.xpath("//button[@class='search-form__submit-button']"));
+    }
 
-        buttonLupa.click();
 
-        sleep(5000);
+    @Test
+    public void checkCatalogTovaruDlyaGamerButton() throws InterruptedException {
 
-        WebElement firstProduct = driver.findElement(By.xpath("//div[@data-product-id='14092905']"));
-
-        String actualProduct = firstProduct.getText();
-
-        Assert.assertTrue(actualProduct.contains("AirPods 3"), "Назва не містить Airpods 3");
-
-        WebElement fullName = driver.findElement(By.xpath("(//a[@class='product-card__title'])[1]"));
-
-        String name = fullName.getText();
-
-//        System.out.println(name);
-
-        fullName.click();
+        WebElement catalogLocatorButton = driver.findElement(By.xpath("//div[@class='mh-catalog-btn']"));
+        catalogLocatorButton.click();
 
         sleep(5000);
 
-        WebElement checkName = driver.findElement(By.xpath("//h1[@class='p-view__header-title']"));
+        WebElement catalogGamerButton = driver.findElement(By.xpath("(//a[@class='mm__a'])[7]"));
 
-        String checkEqualsName = checkName.getText();
+        Assert.assertTrue(catalogGamerButton.isDisplayed());
 
-        Assert.assertEquals(checkEqualsName, name);
+        catalogGamerButton.click();
 
+    }
+
+
+    @Test
+    public void verifyDostavkaAndOplataPageViaBuyersMenu() throws InterruptedException {
+
+        sleep(2000);
+
+        WebElement siteLogo = driver.findElement(By.xpath("//a[@class='v-logo']"));
+        Assert.assertTrue(siteLogo.isDisplayed());
+
+        sleep(2000);
+
+        WebElement searchInput = driver.findElement(By.xpath("//input[@id='search-form__input']"));
+        searchInput.sendKeys("AirPods 3");
+
+        WebElement searchButton = driver.findElement(By.xpath("//button[@class='search-form__submit-button']"));
+        searchButton.click();
+
+        sleep(5000);
+
+        WebElement productCard = driver.findElement(By.xpath("//div[@data-product-id='14092905']"));
+        String productCardText = productCard.getText();
+
+        Assert.assertTrue(productCardText.contains("AirPods 3"), "Назва не містить Airpods 3");
+
+        WebElement firstProductTitleLink = driver.findElement(By.xpath("(//a[@class='product-card__title'])[1]"));
+        String expectedProductTitle = firstProductTitleLink.getText();
+
+        firstProductTitleLink.click();
+
+        sleep(5000);
+
+        WebElement productPageTitle = driver.findElement(By.xpath("//h1[@class='p-view__header-title']"));
+        String actualProductTitle = productPageTitle.getText();
+
+        Assert.assertEquals(actualProductTitle, expectedProductTitle);
+
+    }
+
+    @AfterMethod
+
+    public void close() {
         driver.quit();
-
     }
 
 }
