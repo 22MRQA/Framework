@@ -88,10 +88,42 @@ public class HomePageTest {
 
     }
 
+    @Test
+    public void checkHeaderItems() throws InterruptedException {
+
+        WebElement buyerMenuButton = driver.findElement(By.xpath("//div[@class='mh-button__wrap']"));
+        Assert.assertTrue(buyerMenuButton.isDisplayed());
+
+        buyerMenuButton.click();
+        sleep(2000);
+
+        WebElement buyerDropDownMenu = driver.findElement(By.xpath("//div[@class='mh-button__dropdown']"));
+        Assert.assertTrue(buyerDropDownMenu.isDisplayed());
+
+        WebElement deliveryAndPaymentButton = driver.findElement(By.xpath("(//a[@class='mh-button'])[5]"));
+        Assert.assertTrue(deliveryAndPaymentButton.isDisplayed());
+
+        deliveryAndPaymentButton.click();
+
+        WebElement deliveryAndPaymentTitle = driver.findElement(By.xpath("//h2[@class='sp-page-title sp-h2 page-header']"));
+        String pageTitleText = deliveryAndPaymentTitle.getText();
+        Assert.assertTrue(pageTitleText.contains("Доставка і оплата"));
+
+        WebElement orderProcessSubtitle = driver.findElement(By.xpath("(//h3[@class='sub-block-header'])[1]"));
+        Assert.assertTrue(orderProcessSubtitle.isDisplayed());
+
+        String orderProcessText = orderProcessSubtitle.getText();
+        Assert.assertTrue(orderProcessText.contains("Як оформити замовлення?"));
+
+        System.out.println(orderProcessText);
+
+    }
+
     @AfterMethod
 
     public void close() {
         driver.quit();
     }
+
 
 }
