@@ -1,59 +1,58 @@
-package homePageTests;
+package tests;
 
+import basesClass.TestInit;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.ProductsForGamersPage;
 
 import static java.lang.Thread.sleep;
 
-public class HomePageTest {
+public class HomePageTest extends TestInit {
 
-    WebDriver driver;
-
-    @BeforeMethod
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://allo.ua/");
-    }
+    public String alloUrl = "https://allo.ua/";
 
     @Test
-    public void checkCatalogButton() throws InterruptedException {
+    public void checkCatalogButton(){
 
-        sleep(2000);
+        HomePage homePage = new HomePage(driver);
 
-        WebElement catalogLocatorButton = driver.findElement(By.xpath("//div[@class='mh-catalog-btn']"));
+        openUrl(alloUrl);
 
-        Assert.assertTrue(catalogLocatorButton.isDisplayed());
+        Assert.assertTrue(homePage.catalogButton().isDisplayed());
 
     }
 
 
     @Test
     public void checkCatalogTovaruDlyaGamerButton() throws InterruptedException {
+        HomePage homePage = new HomePage(driver);
 
-        WebElement catalogLocatorButton = driver.findElement(By.xpath("//div[@class='mh-catalog-btn']"));
-        catalogLocatorButton.click();
+        ProductsForGamersPage productsForGamersPage =new ProductsForGamersPage(driver);
 
-        sleep(5000);
+        openUrl(alloUrl);
 
-        WebElement catalogGamerButton = driver.findElement(By.xpath("(//a[@class='mm__a'])[7]"));
+        homePage.clickCatalogButton();
+        Assert.assertTrue(homePage.catalogGamerButton().isDisplayed());
 
-        Assert.assertTrue(catalogGamerButton.isDisplayed());
+        homePage.clickCatalogGamerButton();
+        Assert.assertTrue(productsForGamersPage.expectedFirstItem().isDisplayed());
 
-        catalogGamerButton.click();
+        String nameFirstItem = productsForGamersPage.getNameExpectedFirstItem();
+        Assert.assertTrue(nameFirstItem.contains("Ігрові консолі"));
+
+        // Додати 1 перевірку на сторінці яка відкрилася очікуваний елемент унікальний тільки для цієї сторінки відображаєтся на екрані
+        // Додати 2-гу перевірку що 1 із елементів на сторінці містить очікуваний текст
 
     }
 
 
     @Test
     public void verifyDostavkaAndOplataPageViaBuyersMenu() throws InterruptedException {
-
+        openUrl(alloUrl);
         sleep(2000);
 
         WebElement siteLogo = driver.findElement(By.xpath("//a[@class='v-logo']"));
@@ -90,7 +89,7 @@ public class HomePageTest {
 
     @Test
     public void checkHeaderItems() throws InterruptedException {
-
+        openUrl(alloUrl);
         WebElement buyerMenuButton = driver.findElement(By.xpath("//div[@class='mh-button__wrap']"));
         Assert.assertTrue(buyerMenuButton.isDisplayed());
 
