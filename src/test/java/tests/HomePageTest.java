@@ -16,7 +16,7 @@ public class HomePageTest extends TestInit {
     public String alloUrl = "https://allo.ua/";
 
     @Test
-    public void checkCatalogButton(){
+    public void checkCatalogButton() {
 
         HomePage homePage = new HomePage(driver);
 
@@ -26,29 +26,26 @@ public class HomePageTest extends TestInit {
 
     }
 
-
     @Test
-    public void checkCatalogTovaruDlyaGamerButton() throws InterruptedException {
+    public void checkCatalogTovaruDlyaGamerButton() {
         HomePage homePage = new HomePage(driver);
-
-        ProductsForGamersPage productsForGamersPage =new ProductsForGamersPage(driver);
+        ProductsForGamersPage productsForGamersPage = new ProductsForGamersPage(driver);
 
         openUrl(alloUrl);
 
         homePage.clickCatalogButton();
-        Assert.assertTrue(homePage.catalogGamerButton().isDisplayed());
+        Assert.assertTrue(homePage.catalogGamerButtonDisplyaed());
 
         homePage.clickCatalogGamerButton();
-        Assert.assertTrue(productsForGamersPage.expectedFirstItem().isDisplayed());
+        Assert.assertTrue(productsForGamersPage.firstGameCosolesButtonDisplyaed());
 
-        String nameFirstItem = productsForGamersPage.getNameExpectedFirstItem();
-        Assert.assertTrue(nameFirstItem.contains("Ігрові консолі"));
+        String nameFirstGameConsolesButton = productsForGamersPage.getNameFirstGameCosolesButton();
+        Assert.assertTrue(nameFirstGameConsolesButton.contains("Ігрові консолі"));
 
         // Додати 1 перевірку на сторінці яка відкрилася очікуваний елемент унікальний тільки для цієї сторінки відображаєтся на екрані
         // Додати 2-гу перевірку що 1 із елементів на сторінці містить очікуваний текст
 
     }
-
 
     @Test
     public void verifyDostavkaAndOplataPageViaBuyersMenu() throws InterruptedException {

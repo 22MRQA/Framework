@@ -10,16 +10,17 @@ public class ProductsForGamersPage extends BasePage {
         super(driver);
     }
 
-    private final String EXPECTED_FIRST_ITEM = "(//a[@class='head-nav-a'])[1]";
+    private final String FIRST_ELEMENT_SECTION_GAME_CONSOLES = "(//a[@class='head-nav-a'])[1]";
 
-    public WebElement expectedFirstItem(){
-        return visibilityOfElementByXpath(EXPECTED_FIRST_ITEM);
+    public WebElement firstGameCosolesButton() {
+        return visibilityOfElementByXpath(FIRST_ELEMENT_SECTION_GAME_CONSOLES);
     }
 
-
-    public String getNameExpectedFirstItem (){
-        return expectedFirstItem().getText();
+    public String getNameFirstGameCosolesButton() {
+        return firstGameCosolesButton().getText();
     }
 
-
+    public boolean firstGameCosolesButtonDisplyaed(){
+        return isElementDisplayed(firstGameCosolesButton());
+    }
 }
